@@ -19,6 +19,16 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
     }
 
     /**
+     * It is a redirect response therefore must have this method which returns true
+     *
+     * @return boolean
+     */
+    public function isRedirect()
+    {
+        return true;
+    }
+
+    /**
      * Gets the redirect target url.
      */
     public function getRedirectUrl()
