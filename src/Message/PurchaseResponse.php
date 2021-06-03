@@ -8,14 +8,15 @@ use Omnipay\Common\Message\RedirectResponseInterface;
 class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
     /**
-     * Is the response successful?
+     * Response isn't "successful" because it it succedes
+     * we don't know before person completes payment, that is
+     * why it is a redirect response.
      *
      * @return boolean
      */
     public function isSuccessful()
     {
-        $redirectUrl = $this->getRedirectUrl();
-        return is_string($redirectUrl);
+        return false;
     }
 
     /**
