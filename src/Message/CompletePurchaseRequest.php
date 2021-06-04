@@ -4,7 +4,7 @@ namespace Omnipay\GoPay\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
 
-class StatusRequest extends AbstractRequest
+class CompletePurchaseRequest extends AbstractRequest
 {
 
     /**

@@ -3,13 +3,13 @@
 namespace Omnipay\GoPay;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\GoPay\Message\AccessTokenRequest;
 use Omnipay\GoPay\Message\AccessTokenResponse;
 use Omnipay\GoPay\Message\PurchaseRequest;
 use Omnipay\GoPay\Message\PurchaseResponse;
 use Omnipay\GoPay\Message\RecurrenceRequest;
 use Omnipay\GoPay\Message\CancelRecurrenceRequest;
+use Omnipay\GoPay\Message\CompletePurchaseRequest;
 use Omnipay\GoPay\Message\StatusRequest;
 use Omnipay\GoPay\Message\Notification;
 
@@ -105,7 +105,7 @@ class Gateway extends AbstractGateway
     public function completePurchase(array $parameters = array())
     {
         $this->setToken($this->getAccessToken()->getToken());
-        $request = parent::createRequest(StatusRequest::class, $parameters);
+        $request = parent::createRequest(CompletePurchaseRequest::class, $parameters);
         $response = $request->send();
         return $response;
     }
@@ -194,5 +194,4 @@ class Gateway extends AbstractGateway
     {
         $this->setParameter('token', $token);
     }
-
 }
