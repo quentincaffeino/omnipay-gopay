@@ -3,11 +3,14 @@
 namespace Omnipay\GoPay;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\GoPay\Exception\MalformedOptionException;
+use Omnipay\GoPay\Exception\MissingRequiredOptionException;
 use Omnipay\GoPay\Message\AccessTokenRequest;
 use Omnipay\GoPay\Message\AccessTokenResponse;
 use Omnipay\GoPay\Message\PurchaseRequest;
 use Omnipay\GoPay\Message\PurchaseResponse;
 use Omnipay\GoPay\Message\RecurrenceRequest;
+use Omnipay\GoPay\Message\RefundRequest;
 use Omnipay\GoPay\Message\CancelRecurrenceRequest;
 use Omnipay\GoPay\Message\CompletePurchaseRequest;
 use Omnipay\GoPay\Message\StatusRequest;
@@ -146,6 +149,28 @@ class Gateway extends AbstractGateway
         return $response;
     }
 
+    /**
+     * @param array $options
+     * @return RefundResponse
+     */
+    public function refund(array $options = array())
+    {
+        $this->setToken($this->getAccessToken()->getToken());
+
+        if (!isset($options['amount'])) {
+            throw new MissingRequiredOptionException('refund', 'amount');
+        }
+        if (!is_int($options['amount'])) {
+            throw new MalformedOptionException('refund', 'amount', 'must be an integer');
+        }
+        if ($options['amount'] <= 0) {
+            throw new MalformedOptionException('refund', 'amount', 'must be greater than zero');
+        }
+
+        $request = parent::createRequest(RefundRequest::class, $options);
+        $response = $request->send();
+        return $response;
+    }
 
     public function acceptNotification()
     {
