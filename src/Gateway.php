@@ -157,13 +157,14 @@ class Gateway extends AbstractGateway
     {
         $this->setToken($this->getAccessToken()->getToken());
 
-        if (!isset($options['amount'])) {
+        $amount = $options['amount'];
+        if (!isset($amount)) {
             throw new MissingRequiredOptionException('refund', 'amount');
         }
-        if (!is_int($options['amount'])) {
+        if (!is_int($amount)) {
             throw new MalformedOptionException('refund', 'amount', 'must be an integer');
         }
-        if ($options['amount'] <= 0) {
+        if ($amount <= 0) {
             throw new MalformedOptionException('refund', 'amount', 'must be greater than zero');
         }
 

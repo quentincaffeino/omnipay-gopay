@@ -67,11 +67,6 @@ class RefundRequest extends AbstractRequest
         $this->setParameter('token', $token);
     }
 
-    public function setPurchaseData($data)
-    {
-        $this->setParameter('purchaseData', $data);
-    }
-
     /**
      * @param string $apiUrl
      */
