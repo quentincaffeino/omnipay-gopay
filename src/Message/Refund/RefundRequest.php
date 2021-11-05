@@ -13,11 +13,11 @@ class RefundRequest extends AbstractRequest
      * Get the raw data array for this message. The format of this varies from gateway to
      * gateway, but will usually be either an associative array, or a SimpleXMLElement.
      *
-     * @return mixed
+     * @return array
      */
     public function getData()
     {
-        return $this->getParameter('transactionReference');
+        return $this->getParameter('refundData');
     }
 
     /**
@@ -33,7 +33,7 @@ class RefundRequest extends AbstractRequest
     /**
      * Send the request with specified data
      *
-     * @param  mixed $data The data to send
+     * @param  array $data The data to send
      * @return PurchaseResponse
      */
     public function sendData($data)
