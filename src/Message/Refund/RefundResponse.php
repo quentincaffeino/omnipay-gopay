@@ -23,7 +23,7 @@ class RefundResponse extends AbstractResponse
 
     public function getId()
     {
-        if (isset($this->data['id']) && !empty(isset($this->data['id']))) {
+        if (isset($this->data['id']) && !empty($this->data['id'])) {
             return (string) $this->data['id'];
         }
         return null;
