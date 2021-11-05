@@ -21,6 +21,13 @@ class RefundRequest extends AbstractRequest
     }
 
     /**
+     * @param array $refundData
+     */
+    public function setRefundData($refundData) {
+        $this->setParameter('refundData', $refundData);
+    }
+
+    /**
      * Get the transaction reference which was used to create recurrent profile
      *
      * @return mixed
