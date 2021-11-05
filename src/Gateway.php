@@ -10,7 +10,7 @@ use Omnipay\GoPay\Message\AccessTokenResponse;
 use Omnipay\GoPay\Message\PurchaseRequest;
 use Omnipay\GoPay\Message\PurchaseResponse;
 use Omnipay\GoPay\Message\RecurrenceRequest;
-use Omnipay\GoPay\Message\RefundRequest;
+use Omnipay\GoPay\Message\Refund\RefundRequest;
 use Omnipay\GoPay\Message\CancelRecurrenceRequest;
 use Omnipay\GoPay\Message\CompletePurchaseRequest;
 use Omnipay\GoPay\Message\StatusRequest;
@@ -151,7 +151,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $options
-     * @return RefundResponse
+     * @return \Omnipay\GoPay\Message\Refund\RefundResponse
      */
     public function refund(array $options = array())
     {

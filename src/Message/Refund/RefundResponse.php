@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omnipay\GoPay\Message;
+namespace Omnipay\GoPay\Message\Refund;
 
 use Omnipay\Common\Message\AbstractResponse;
 
