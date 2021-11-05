@@ -36,4 +36,9 @@ class RefundResponse extends AbstractResponse
         }
         return null;
     }
+
+    public function getMessage()
+    {
+        return $this->getResult();
+    }
 }
