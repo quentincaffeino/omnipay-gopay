@@ -157,7 +157,7 @@ class Gateway extends AbstractGateway
     {
         $this->setToken($this->getAccessToken()->getToken());
 
-        $amount = $options['amount'];
+        $amount = $options['refundData']['amount'];
         if (!isset($amount)) {
             throw new MissingRequiredOptionException('refund', 'amount');
         }
