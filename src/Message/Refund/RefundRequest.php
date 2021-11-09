@@ -23,7 +23,8 @@ class RefundRequest extends AbstractRequest
     /**
      * @param array $refundData
      */
-    public function setRefundData($refundData) {
+    public function setRefundData($refundData)
+    {
         $this->setParameter('refundData', $refundData);
     }
 
@@ -45,19 +46,22 @@ class RefundRequest extends AbstractRequest
      */
     public function sendData($data)
     {
+        $transactionReference = $this->getTransactionReference();
+        $url = sprintf('%s/api/payments/payment/%s/refund', $this->getParameter('apiUrl'), $transactionReference);
+
         $headers = [
             'Accept' => 'application/json',
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Authorization' => $this->getParameter('token'),
         ];
 
-        $transactionReference = $this->getTransactionReference();
+        $body = http_build_query($data);
 
         $httpResponse = $this->httpClient->request(
             'POST',
-            sprintf('%s/api/payments/payment/%s/refund', $this->getParameter('apiUrl'), $transactionReference),
+            $url,
             $headers,
-            http_build_query($data)
+            $body
         );
 
         $refundResponseData = json_decode($httpResponse->getBody()->getContents(), true);
