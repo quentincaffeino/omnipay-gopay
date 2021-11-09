@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Omnipay\GoPay\Message;
+namespace Omnipay\GoPay\Message\Refund;
 
 use Omnipay\Common\Message\AbstractRequest;
 
@@ -13,11 +13,19 @@ class RefundRequest extends AbstractRequest
      * Get the raw data array for this message. The format of this varies from gateway to
      * gateway, but will usually be either an associative array, or a SimpleXMLElement.
      *
-     * @return mixed
+     * @return array
      */
     public function getData()
     {
-        return $this->getParameter('transactionReference');
+        return $this->getParameter('refundData');
+    }
+
+    /**
+     * @param array $refundData
+     */
+    public function setRefundData($refundData)
+    {
+        $this->setParameter('refundData', $refundData);
     }
 
     /**
@@ -33,24 +41,27 @@ class RefundRequest extends AbstractRequest
     /**
      * Send the request with specified data
      *
-     * @param  mixed $data The data to send
+     * @param  array $data The data to send
      * @return PurchaseResponse
      */
     public function sendData($data)
     {
+        $transactionReference = $this->getTransactionReference();
+        $url = sprintf('%s/api/payments/payment/%s/refund', $this->getParameter('apiUrl'), $transactionReference);
+
         $headers = [
             'Accept' => 'application/json',
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Authorization' => $this->getParameter('token'),
         ];
 
-        $transactionReference = $this->getTransactionReference();
+        $body = http_build_query($data);
 
         $httpResponse = $this->httpClient->request(
             'POST',
-            sprintf('%s/api/payments/payment/%s/refund', $this->getParameter('apiUrl'), $transactionReference),
+            $url,
             $headers,
-            http_build_query($data)
+            $body
         );
 
         $refundResponseData = json_decode($httpResponse->getBody()->getContents(), true);
@@ -65,11 +76,6 @@ class RefundRequest extends AbstractRequest
     public function setToken($token)
     {
         $this->setParameter('token', $token);
-    }
-
-    public function setPurchaseData($data)
-    {
-        $this->setParameter('purchaseData', $data);
     }
 
     /**

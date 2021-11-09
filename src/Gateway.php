@@ -10,7 +10,7 @@ use Omnipay\GoPay\Message\AccessTokenResponse;
 use Omnipay\GoPay\Message\PurchaseRequest;
 use Omnipay\GoPay\Message\PurchaseResponse;
 use Omnipay\GoPay\Message\RecurrenceRequest;
-use Omnipay\GoPay\Message\RefundRequest;
+use Omnipay\GoPay\Message\Refund\RefundRequest;
 use Omnipay\GoPay\Message\CancelRecurrenceRequest;
 use Omnipay\GoPay\Message\CompletePurchaseRequest;
 use Omnipay\GoPay\Message\StatusRequest;
@@ -151,19 +151,20 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $options
-     * @return RefundResponse
+     * @return \Omnipay\GoPay\Message\Refund\RefundResponse
      */
     public function refund(array $options = array())
     {
         $this->setToken($this->getAccessToken()->getToken());
 
-        if (!isset($options['amount'])) {
+        $amount = $options['refundData']['amount'];
+        if (!isset($amount)) {
             throw new MissingRequiredOptionException('refund', 'amount');
         }
-        if (!is_int($options['amount'])) {
+        if (!is_int($amount)) {
             throw new MalformedOptionException('refund', 'amount', 'must be an integer');
         }
-        if ($options['amount'] <= 0) {
+        if ($amount <= 0) {
             throw new MalformedOptionException('refund', 'amount', 'must be greater than zero');
         }
 
