@@ -54,7 +54,7 @@ class AccessTokenRequest extends AbstractRequest
     public function getData()
     {
         return [
-            'scope' => 'payment-create',
+            'scope' => 'payment-all',
             'grant_type' => 'client_credentials',
         ];
     }
